@@ -1,0 +1,67 @@
+<div class="col-lg-6" *ngIf="identity && identity.role == 'ROLE_ADMIN'">
+
+  <div class="album-box" *ngIf="album && album.image != ''" >
+      <div id="album-head-card">
+        <div class="album-image">
+          <img src="{{url + 'get-image-album/' + album.image}}" />
+        </div>
+        <div class="data">
+            <h1>{{album.title}}</h1>
+            <p>{{album.year}}</p>
+            <p>{{album.description}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <h1>{{titulo}}</h1>
+
+  <div *ngIf="alertMessage">
+      <div class="alert alert-info">
+        {{alertMessage}}
+      </div>
+    </div>
+  <div >
+    <form class="contenido-central" #formSong="ngForm" (ngSubmit)="onSubmit()">
+        <p>
+            <label>Numero</label>
+            <input type="text" class="form-control" #number="ngModel" name="number"
+            [(ngModel)]="song.number" required >
+
+            <span style="color: red;" *ngIf="!number.valid && number.touched">
+              El numero es obligatorio
+            </span>
+          </p>
+      <p>
+          <label>Titulo</label>
+          <input type="text" class="form-control" #name="ngModel" name="title" [(ngModel)]="song.name" required >
+          <span  style="color: red;"  *ngIf="!name.valid && name.touched">
+            El nombre es obligatorio
+          </span>
+        </p>
+        <p>
+          <label>Duración</label>
+          <textarea type="text" class="form-control" #duration="ngModel" name="duration"
+          [(ngModel)]="song.duration" required >
+          </textarea>
+          <span style="color: red;" *ngIf="!duration.valid && duration.touched">
+            El numero es obligatorio
+          </span>
+        </p>
+
+        <div *ngIf="isEdit" class="song-file-for-edit">
+            <div *ngIf="song.file && song.file != 'null'" class="image_for_edit">
+              <audio controls>
+                  <source src="{{url + 'get-song-file/' + song.file}}" type="audio/mpeg" />
+                    El navegador no soporta la reproduccion de audio
+              </audio>
+            </div>
+            <p>
+              <label>Sube el fichero de audio</label>
+              <input type="file" placeholder="Subir canción"
+              (change)="fileSaveEvent($event)">
+            </p>
+          </div>
+        <input type="submit" value="{{titulo}}" [disabled]="!formSong.form.valid" class="btn btn-success">
+    </form>
+  </div>
+</div>

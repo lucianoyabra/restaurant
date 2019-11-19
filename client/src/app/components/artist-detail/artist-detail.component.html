@@ -1,0 +1,58 @@
+<div *ngIf="artist" class="artist-box">
+  <div id="artist-head-card" class="">
+      <div class="artist-image">
+        <img  src="{{url + 'get-image-artist/' + artist.image }}" *ngIf="artist.image && artist.image!= 'null'" >
+      </div>
+
+      <div class="data">
+        <h1>{{artist.name}}</h1>
+        <p class="description">{{artist.description}}</p>
+        <a *ngIf="identity.role == 'ROLE_ADMIN'" [routerLink]="['/crear-album', artist._id]" routerLinkActive="router-link-active"  class="btn btn-default">
+          Agregar album
+        </a>
+      </div>
+  </div>
+  <ul class="pagination pull-right">
+      <li><a [routerLink]="['/artista', artist._id,prevPage]">&laquo;</a></li>
+      <li><a [routerLink]="['/artista', artist._id,nextPage]" >&raquo;</a></li>
+    </ul>
+  <div class="clearfix"></div>
+  <div class="contenido-central"  *ngIf="albums">
+    <ul class="album-list">
+      <li *ngFor="let album of albums" class="col-lg-4 album-item">
+        <div class="album-image">
+          <a [routerLink]="['/album', album._id]" routerLinkActive="router-link-active" >
+            <img  src="{{url + 'get-image-album/' + album.image }}" *ngIf="album.image && album.image!= 'null'" >
+          </a>
+        </div>
+        <div class="album-title">
+          <p>
+            <a [routerLink]="['/album', album._id]" routerLinkActive="router-link-active"  >
+            {{album.title}} - {{album.description}}
+          </a>
+          </p>
+
+            <div class="buttons" *ngIf="identity.role == 'ROLE_ADMIN'">
+                <a [routerLink]="['/editar-album', album._id]"
+                 class="btn btn-sm btn-warning" >Editar</a>
+
+                 <a (click)="onDeleteConfirm(album._id)"
+                 class="btn btn-sm btn-danger" >Borrar</a>
+            </div>
+
+            <div class="seguro" *ngIf="confirmado == album._id">
+                <a (click)="onDeleteAlbum(album._id)"
+                class="btn btn-sm btn-danger" >Eliminar</a>
+
+                <a (click)="onCancelAlbum()"
+                class="btn btn-sm btn-primary" >Cancelar</a>
+            </div>
+        </div>
+
+
+      </li>
+
+    </ul>
+  </div>
+</div>
+

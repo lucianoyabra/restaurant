@@ -1,0 +1,61 @@
+
+<div class="" *ngIf="artist">
+  <div id="artist-head-card" class="">
+      <div class="artist-image">
+        <img  src="{{url + 'get-image-artist/' + artist.image }}" *ngIf="artist.image && artist.image!= 'null'" >
+      </div>
+
+      <div class="data">
+        <h1>{{artist.name}}</h1>
+        <p class="description">{{artist.description}}</p>
+      </div>
+  </div>
+</div>
+<div class="clearfix"></div>
+  <div *ngIf="alertMessage">
+    <div class="alert alert-info">
+      {{alertMessage}}
+    </div>
+  </div>
+
+<h1>{{titulo}}</h1>
+<div class="contenido-central col-lg-3">
+  <form #formAlbum="ngForm" (ngSubmit)="onSubmit()">
+      <p>
+        <label>Titulo</label>
+        <input type="text" class="form-control" #title="ngModel" name="title" [(ngModel)]="album.title" required >
+        <span  style="color: red;"  *ngIf="!title.valid && title.touched">
+          El titulo es obligatorio
+        </span>
+      </p>
+      <p>
+        <label>Descripcion</label>
+        <textarea type="text" class="form-control" #description="ngModel" name="description"
+        [(ngModel)]="album.description" required >
+        </textarea>
+        <span style="color: red;" *ngIf="!description.valid && description.touched">
+          La descripcion es obligatoria
+        </span>
+      </p>
+      <p>
+        <label>Year</label>
+        <textarea type="text" class="form-control" #year="ngModel" name="year"
+        [(ngModel)]="album.year" required >
+        </textarea>
+        <span style="color: red;" *ngIf="!year.valid && year.touched">
+          El año es obligatorio
+        </span>
+      </p>
+      <div *ngIf="isEdit" class="album-image-for-edit">
+        <div *ngIf="album.image && album.image != 'null'" class="image_for_edit">
+          <img src="{{url + 'get-image-album/' + album.image}}">
+        </div>
+        <p>
+          <label>Sube la imagen del Album</label>
+          <input type="file" placeholder="Subir imagen"
+          (change)="fileSaveEvent($event)">
+        </p>
+      </div>
+      <input type="submit" value="{{titulo}}" [disabled]="!formAlbum.form.valid" class="btn btn-success">
+  </form>
+</div>
