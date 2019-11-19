@@ -1,5 +1,5 @@
 {
-  "name": "spotify",
+  "name": "restaurant",
   "version": "1.0.0",
   "description": "Proyecto de api rest con Node js para el curso de MEAN",
   "main": "index.js",

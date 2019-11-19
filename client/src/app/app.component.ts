@@ -13,12 +13,14 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 export class AppComponent implements OnInit {
   public title = 'Musify';
   public user: User;
+  public userLogIn: User;
   public user_register: User;
   public identity;
   public token;
   public errorMessage;
   public alertRegister;
   public url:string;
+  public mostrarWeb = false;
 
   constructor(private _userService: UserService,
     private _route: ActivatedRoute,
@@ -34,6 +36,17 @@ export class AppComponent implements OnInit {
     this.token = this._userService.getToken();
     console.log(this.identity);
     console.log(this.token);
+  }
+
+  public mostrarOcultar(){
+
+    if (this.mostrarWeb == false) {
+      document.getElementById('web').setAttribute('style','display:none');
+      this.mostrarWeb = true;
+    } else {
+      document.getElementById('web').setAttribute('style','display:block');
+      this.mostrarWeb = false;
+    }
   }
 
   public onSubmit3(){
@@ -64,6 +77,7 @@ export class AppComponent implements OnInit {
             response => {
               let token = response.token;
               this.token = token;
+              this.userLogIn = response.user;
               this.user_register = new User('','','','','','ROLE_USER','');
 
               if(this.token.lenght <= 0){

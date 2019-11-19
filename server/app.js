@@ -6,10 +6,10 @@ var bodyparser = require('body-parser');
 var app = express();
 
 //Cargar Rutas
+var table_routes = require('./routes/table');
+var reserve_routes = require('./routes/reserve');
+var event_routes = require('./routes/event');
 var user_routes = require('./routes/user');
-var artist_routes = require('./routes/artist');
-var album_routes = require('./routes/album');
-var song_routes = require('./routes/song');
 
 
 app.use(bodyparser.urlencoded({extended:false}));
@@ -28,9 +28,9 @@ app.use((req, res, next) => {
 
 // rutas base
 app.use('/api',user_routes);
-app.use('/api',artist_routes);
-app.use('/api',album_routes);
-app.use('/api',song_routes);
+app.use('/api',table_routes);
+app.use('/api',reserve_routes);
+app.use('/api',event_routes);
 
 /*app.get('/pruebas', function(req,res){
     res.status(200).send({message: 'bienvenido al curso spotify'});
