@@ -16,7 +16,6 @@
 
          <!--  Text based logo  -->
         <a class="navbar-brand" href="index.html">{{title}}<span>x</span></a>
-
         <!--  Image based logo  -->
         <!-- <a class="navbar-brand" href="index.html"><img src="assets/img/logo.png" alt="Logo img"></a>  -->
 
@@ -24,24 +23,28 @@
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul id="top-menu" class="nav navbar-nav navbar-right mu-main-nav">
-          <li><a *ngIf="!identity" href="index.html">HOME</a></li>
+          <li><a *ngIf="!identity" href="#mu-slider" >HOME</a></li>
           <li><a *ngIf="!identity" href="#mu-about-us">ABOUT US</a></li>
           <li><a *ngIf="!identity" href="#mu-restaurant-menu">MENU</a></li>
           <li><a *ngIf="!identity" href="#mu-reservation">RESERVATION</a></li>
           <li><a *ngIf="!identity" href="#mu-gallery">GALLERY</a></li>
           <li><a *ngIf="!identity" href="#mu-chef">OUR CHEFS</a></li>
           <li><a *ngIf="!identity" href="#mu-contact">CONTACT</a></li>
-          <li><a *ngIf="!identity"  href="#mu-contact">LOGIN</a></li>
+          <li><a *ngIf="!identity"  href="#mu-footer">LOGIN</a>
+
+
+          </li>
           <li><a id="user_logged" *ngIf="identity">
             <div class="user-image">
-
-              <img id="image-logged" src="{{url + 'get-image-user/'+ identity.image}}" >
+              <img id="image-logged" title="{{identity.name + ' ' + identity.surname }}" src="{{url + 'get-image-user/'+ identity.image}}" >
             </div>
+
             </a></li>
-          <li><a *ngIf="identity" [routerLink]="['mis-datos']" >MIS DATOS</a></li>
-          <li><a *ngIf="identity" href="#mu-contact">SALON</a></li>
-          <li><a *ngIf="identity" href="#mu-contact">RESERVAS</a></li>
-          <li><a *ngIf="identity" href="#mu-contact">LOGOUT</a></li>
+          <li><a *ngIf="identity &&  identity.role == 'ROLE_ADMIN'" [routerLink]="['mis-datos']" >MIS DATOS</a></li>
+          <li><a *ngIf="identity" class="btnLogOut" >SALON</a></li>
+          <li><a *ngIf="identity" class="btnLogOut" >RESERVAS</a></li>
+          <li><a *ngIf="identity &&  identity.role == 'ROLE_ADMIN'" [routerLink]="['crear-usuario']" class="btnLogOut" >USUARIOS</a></li>
+          <li><a  *ngIf="identity" (click)="logOut()" class="btnLogOut" >LOGOUT</a></li>
           <li >
             <a style="padding-top:18px;"*ngIf="identity">
             <label   class="switch">
@@ -61,135 +64,6 @@
 
 
 
-<!--ESPACIO SIN LOGUEARSE-->
-<div class="col-lg-11"  *ngIf="!identity">
-    <div class="row" >
-      <div  class="col-lg-6">
-        <h1>Log In</h1>
-        <div *ngIf="errorMessage">
-          <div class="alert alert-info">
-            <strong>Error </strong> {{errorMessage}}
-          </div>
-        </div>
-        <form #loginForm="ngForm" (ngSubmit)="onSubmit()" class="col-md-7">
-          <p>
-            <label>Email</label>
-            <input type="email" #email="ngModel"
-            name="email" [(ngModel)]="user.email"
-            class="form-control" required />
-            <span style="color: red;"
-            *ngIf="!email.valid && email.touched">Debe Ingresar el Email</span>
-          </p>
-          <p>
-            <label>Password</label>
-            <input type="password" #password="ngModel" name="password"
-            [(ngModel)]="user.password" class="form-control" required />
-            <span style="color: red;"
-            *ngIf="!password.valid && password.touched">Debe Ingresar la contraseña</span>
-          </p>
-          <input type="submit" value="Login" class="btn btn-primary" >
-
-        </form>
-        <br>
-
-      </div>
-    <div class="col-lg-6"   *ngIf="!identity" >
-      <h1>Get Registered</h1>
-      <div *ngIf="alertRegister">
-        <div class="alert alert-info">
-          {{alertRegister}}
-        </div>
-      </div>
-      <form #registerForm="ngForm" (submit)="onSubmitRegister()" class="col-md-7">
-          <p>
-            <label>First Name</label>
-            <input type="text" #name="ngModel" name="name" [(ngModel)]="user_register.name"
-            class="form-control" required />
-            <span style="color: red;"
-            *ngIf="!name.valid && name.touched">Debe ingresar el nombre</span>
-          </p>
-          <p>
-            <label>Last Name</label>
-            <input type="text" #surname="ngModel" name="surname" [(ngModel)]="user_register.surname"
-            class="form-control" required />
-            <span style="color: red;"
-            *ngIf="!surname.valid && surname.touched">Debe ingresar el apellido</span>
-          </p>
-          <p>
-            <label>Email</label>
-            <input type="email" #email="ngModel"
-            name="email" [(ngModel)]="user_register.email"
-            class="form-control" required />
-            <span style="color: red;"
-            *ngIf="!email.valid && email.touched">Debe Ingresar el Email</span>
-          </p>
-          <p>
-            <label>Password</label>
-            <input type="password" #password="ngModel" name="password"
-            [(ngModel)]="user_register.password" class="form-control" required />
-            <span style="color: red;"
-            *ngIf="!password.valid && password.touched">Debe Ingresar la contraseña</span>
-          </p>
-          <input type="submit" value="Register" class="btn btn-primary" >
-        </form>
-    </div>
-  </div>
-  </div>
-
-<!--FIN ESPACIO SIN LOGUEARSE-->
-
-
-<div class="wrapper">
-    <!-- Sidebar -->
-    <nav id="sidebar" *ngIf="identity" >
-      <ul class="list-unstyled components">
-          <li>
-            <nav id="user_logged">
-                <a [routerLink]="['/']">
-                  <span class="glyphicon glyphicon-music" aria-hidden="true">
-
-                  </span>
-                    {{title}}
-                </a>
-              <a>
-                  <div class="user-image" *ngIf="identity.image" >
-                      <img id="image-logged" src="{{url + 'get-image-user/'+ identity.image}}" >
-                  </div>
-                  <span id="identity_name">
-                      {{identity.name}} {{identity.surname}}
-                  </span>
-              </a>
-            </nav>
-          </li>
-          <li class="active">
-            <div *ngIf="identity" class="navigation">
-              <nav id="navigation" >
-                <a [routerLink]="['/']">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                    Buscar
-                </a>
-                <a [routerLink]="['/artistas', 1]" [routerLinkActive]="['actived']">
-                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                    Artistas
-                </a>
-                <a [routerLink]="['/']">
-                    <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
-                    Albums
-                </a>
-                <a [routerLink]="['/mis-datos']" [routerLinkActive]="['actived']" >
-                  <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                  Mis Datos
-                </a>
-                <a (click)="logOut()" class="btnLogOut">
-                    <span class="glyphicon glyphicon-log-out" ></span>
-                     Salir
-                </a>
-              </nav>
-            </div>
-          </li>
-      </ul>
-  </nav>
-
     <!-- Page Content -->
     <div id="content" >
 
@@ -197,12 +71,10 @@
 
 
 
-      <div [class.hidden]="!identity" class="central col-lg-11">
-
+        <div class="clearfix"></div>
           <router-outlet></router-outlet>
           <div class="clearfix"></div>
 
-        </div>
 
 
 
@@ -210,7 +82,7 @@
 
     </div>
 
-</div>
+
 <div id="web">
 
   <!-- Start slider  -->
@@ -1486,12 +1358,43 @@
 
 
   <!-- Start Footer -->
-  <footer id="mu-footer">
+  <footer id="mu-footer" >
       <div class="container">
         <div class="row">
           <div class="col-md-12">
           <div class="mu-footer-area">
-             <div class="mu-footer-social">
+            <div  *ngIf="!identity" class="col-lg-6">
+              <h1>Log In</h1>
+              <div *ngIf="errorMessage">
+                <div class="alert alert-info">
+                  <strong>Error </strong> {{errorMessage}}
+                </div>
+              </div>
+              <form #loginForm="ngForm" (ngSubmit)="onSubmit()" style="align-content: center;">
+                <div class="row">
+                <p>
+                  <label>Email</label>
+                  <input type="email" #email="ngModel"
+                  name="email" [(ngModel)]="user.email"
+                  class="form-control" required />
+                  <span style="color: red;"
+                  *ngIf="!email.valid && email.touched">Debe Ingresar el Email</span>
+                </p>
+                <p>
+                  <label>Password</label>
+                  <input type="password" #password="ngModel" name="password"
+                  [(ngModel)]="user.password" class="form-control" required />
+                  <span style="color: red;"
+                  *ngIf="!password.valid && password.touched">Debe Ingresar la contraseña</span>
+                </p>
+                <input type="submit" value="Login" class="btn btn-primary" >
+              </div>
+              </form>
+              <br>
+
+            </div>
+
+            <div class="mu-footer-social">
               <a href="#"><span class="fa fa-facebook"></span></a>
               <a href="#"><span class="fa fa-twitter"></span></a>
               <a href="#"><span class="fa fa-google-plus"></span></a>
@@ -1507,5 +1410,7 @@
       </div>
     </footer>
     <!-- End Footer -->
+
+
 
 </div>

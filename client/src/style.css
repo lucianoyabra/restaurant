@@ -37,6 +37,12 @@ body {
 
 #content{
   padding-bottom: 50px;
+  padding-top: 50px;
+}
+
+.user-edit-class{
+  padding:20px;
+  padding-top:40px;
 }
 
 .no-padding {
@@ -46,6 +52,10 @@ body {
 
 #user_logged{
   padding-top: 9px;
+}
+
+.btnLogOut:hover{
+  cursor: pointer;
 }
 
 #user_logged .user-image{
@@ -185,7 +195,7 @@ img {
 ====================*/
 
 #mu-header {
-  background-color: #fff;
+  background-color: #ddd;
   border-bottom: 1px solid #ddd;
   position: fixed;
   left: 0;
@@ -202,7 +212,7 @@ img {
 .mu-main-navbar {
   background-color: transparent;
   border: none;
-  padding: 20px 0;
+  padding: 10px 0;
   border-radius: 0;
   margin-bottom: 0;
   -webkit-transition: all 0.5s;

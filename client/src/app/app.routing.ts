@@ -4,6 +4,9 @@ import { Routes, RouterModule } from '@angular/router';
 //Import User
 import {UserEditComponent} from './components/user-edit/user-edit.component';
 
+//Import user add
+import {UserAddComponent} from './components/user-add/user-add.component';
+
 //Import Artist
 import {ArtistListComponent} from './components/artist-list/artist-list.component';
 
@@ -34,10 +37,13 @@ import { SongAddComponent } from './components/song-add/song-add.component';
 //Import Song Edit
 import {SongEditComponent} from './components/song-edit/song-edit.component';
 
+
+
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'artistas/:page', component: ArtistListComponent},
   {path: 'crear-artistas', component: ArtistAddComponent},
+  {path: 'crear-usuario', component: UserAddComponent},
   {path: 'editar-artista/:id', component: ArtistEditComponent},
   {path: 'editar-album/:id', component: AlbumEditComponent},
   {path: 'crear-album/:artist', component: AlbumAddComponent},

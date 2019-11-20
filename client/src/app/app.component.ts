@@ -11,7 +11,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
 })
 export class AppComponent implements OnInit {
-  public title = 'Musify';
+  public title = 'Empresa';
   public user: User;
   public userLogIn: User;
   public user_register: User;
@@ -77,7 +77,6 @@ export class AppComponent implements OnInit {
             response => {
               let token = response.token;
               this.token = token;
-              this.userLogIn = response.user;
               this.user_register = new User('','','','','','ROLE_USER','');
 
               if(this.token.lenght <= 0){
@@ -85,7 +84,8 @@ export class AppComponent implements OnInit {
               }else{
                   //CREAR ELEMENTO EN EL LOCAL STORAGE PARA TENER AL token disponible
                   localStorage.setItem('token', token);
-                  window.location.reload();
+                  //document.getElementById('web').setAttribute('style','display:none');
+                  //window.location.reload();
                   //console.log(token);
                   //console.log(identity);
 
@@ -110,36 +110,6 @@ export class AppComponent implements OnInit {
         console.log(error);
       }
     });
-  }
-
-  onSubmitRegister(){
-    console.log(this.user_register);
-    this._userService.register(this.user_register).subscribe(
-      response => {
-        let user = response.user;
-        this.user_register = user;
-        let message = response.message;
-
-        if (!message){
-          if(!user._id){
-            this.alertRegister = 'Error al registrarse';
-          }else{
-            this.alertRegister = 'El registro se ha realizado correctamente, identificate con '+ this.user_register.email;
-            this.user_register = new User('','','','','','ROLE_USER','');
-          }
-        }else{
-          this.alertRegister = message;
-        }
-
-    }, error =>{
-      var errorMensaje = <any>error;
-      if(errorMensaje != null){
-        var body = JSON.parse(error._body);
-        this.alertRegister = body.message;
-        console.log(error);
-      }
-    }
-    );
   }
 
   logOut(){
